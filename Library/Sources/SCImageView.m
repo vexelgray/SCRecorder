@@ -50,7 +50,7 @@
 }
 
 - (void)_imageViewCommonInit {
-    _scaleAndResizeCIImageAutomatically = YES;
+    _scaleAndResizeCIImageAutomatically = NO;
     self.preferredCIImageTransform = CGAffineTransformIdentity;
     
     _sampleBufferHolder = [SCSampleBufferHolder new];
@@ -234,7 +234,7 @@
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
 
-    if (_CIImage != nil && [self loadContextIfNeeded]) {
+    if ((_CIImage != nil || _sampleBufferHolder.sampleBuffer != nil) && [self loadContextIfNeeded]) {
         if (self.context.type == SCContextTypeCoreGraphics) {
             CIImage *image = [self renderedCIImageInRect:rect];
 
@@ -344,9 +344,9 @@ static CGRect CGRectMultiply(CGRect rect, CGFloat contentScale) {
         rect = CGRectMultiply(rect, self.contentScaleFactor);
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
-        
+
         CIImage *image = [self renderedCIImageInRect:rect];
-        
+
         if (image != nil) {
             [_context.CIContext drawImage:image inRect:[self processRect:rect withImageSize:image.extent.size] fromRect:image.extent];
         }
