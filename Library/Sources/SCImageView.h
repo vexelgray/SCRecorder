@@ -13,12 +13,11 @@
 #import <GLKit/GLKit.h>
 #import "SCFilter.h"
 #import "SCContext.h"
-@import PBImageView;
 
 /**
  A view capable of rendering CIImages.
  */
-@interface SCImageView : PBImageView
+@interface SCImageView : UIView
 
 /**
  The context type to use when loading the context.

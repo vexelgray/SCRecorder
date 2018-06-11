@@ -42,7 +42,7 @@
 
 - (void)_swipeableCommonInit {
     _refreshAutomaticallyWhenScrolling = YES;
-    _selectFilterScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    _selectFilterScrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _selectFilterScrollView.delegate = self;
     _selectFilterScrollView.pagingEnabled = YES;
     _selectFilterScrollView.showsHorizontalScrollIndicator = NO;
@@ -58,13 +58,13 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _selectFilterScrollView.frame = self.bounds;
+    _selectFilterScrollView.frame = [UIScreen mainScreen].bounds;
     
     [self updateScrollViewContentSize];
 }
 
 - (void)updateScrollViewContentSize {
-    _selectFilterScrollView.contentSize = CGSizeMake(self.filters.count * self.frame.size.width * 3, self.frame.size.height);
+    _selectFilterScrollView.contentSize = CGSizeMake(self.filters.count * [UIScreen mainScreen].bounds.size.width * 3, [UIScreen mainScreen].bounds.size.height);
     
     if (self.selectedFilter != nil) {
         [self scrollToFilter:self.selectedFilter animated:NO];
@@ -129,18 +129,29 @@
     CGFloat contentOffsetX = scrollView.contentOffset.x;
     CGFloat contentSizeWidth = scrollView.contentSize.width;
     CGFloat normalWidth = self.filters.count * width;
+    
+//    NSLog(@"scroll width before if %f", width);
+//    NSLog(@"contentOffsetX before if %f", contentOffsetX);
+//    NSLog(@"contentSizeWidth before if %f", contentSizeWidth);
+//    NSLog(@"normalWidth before if %f", normalWidth);
 
-    if (width > 0 && contentSizeWidth > 0) {
-        if (contentOffsetX <= 0) {
-            scrollView.contentOffset = CGPointMake(contentOffsetX + normalWidth, scrollView.contentOffset.y);
-        } else if (contentOffsetX + width >= contentSizeWidth) {
-            scrollView.contentOffset = CGPointMake(contentOffsetX - normalWidth, scrollView.contentOffset.y);
-        }
-    }
+//    if (width > 0 && contentSizeWidth > 0) {
+//        if (contentOffsetX <= 0) {
+//            scrollView.contentOffset = CGPointMake(contentOffsetX + normalWidth, scrollView.contentOffset.y);
+//        } else if (contentOffsetX + width >= contentSizeWidth) {
+//            scrollView.contentOffset = CGPointMake(contentOffsetX - normalWidth, scrollView.contentOffset.y);
+//        }
+//    }
+    
+//    NSLog(@"normalWidth after if en X: %f Y: %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
+    
     
     if (_refreshAutomaticallyWhenScrolling) {
         [self setNeedsDisplay];
     }
+    
+    
+    
 }
 
 - (CIImage *)renderedCIImageInRect:(CGRect)rect {

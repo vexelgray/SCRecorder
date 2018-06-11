@@ -90,10 +90,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    _GLKView.frame = self.bounds;
+    _GLKView.frame = [UIScreen mainScreen].bounds;
 
 #if !(TARGET_IPHONE_SIMULATOR)
-    _MTKView.frame = self.bounds;
+    _MTKView.frame = [UIScreen mainScreen].bounds;
 #endif
 }
 
@@ -121,7 +121,7 @@
             case SCContextTypeCoreGraphics:
                 break;
             case SCContextTypeEAGL:
-                _GLKView = [[GLKView alloc] initWithFrame:self.bounds context:context.EAGLContext];
+                _GLKView = [[GLKView alloc] initWithFrame:[UIScreen mainScreen].bounds context:context.EAGLContext];
                 _GLKView.contentScaleFactor = self.contentScaleFactor;
                 _GLKView.delegate = self;
                 _GLKView.backgroundColor = [UIColor clearColor];
@@ -130,7 +130,7 @@
 #if !(TARGET_IPHONE_SIMULATOR)
             case SCContextTypeMetal:
                 _MTLCommandQueue = [context.MTLDevice newCommandQueue];
-                _MTKView = [[MTKView alloc] initWithFrame:self.bounds device:context.MTLDevice];
+                _MTKView = [[MTKView alloc] initWithFrame:[UIScreen mainScreen].bounds device:context.MTLDevice];
                 _MTKView.clearColor = MTLClearColorMake(0, 0, 0, 0);
                 _MTKView.contentScaleFactor = self.contentScaleFactor;
                 _MTKView.delegate = self;
