@@ -153,6 +153,8 @@ static char *ContextDidChangeDevice = "DidChangeDevice";
         self.cameraFocusTargetView.center = self.center;
         [recorder continuousFocusAtPoint:CGPointMake(.5f, .5f)];
     }
+    
+    [self.recorder switchCaptureDevices];
 }
 
 - (void)pinchToZoom:(UIPinchGestureRecognizer *)gestureRecognizer {
